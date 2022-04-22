@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -27,8 +29,9 @@ public class OlxAdvertiseController {
 				"anand", 2104, 2104, "Open"));
 	}
 
-	// http://localhost:2040/user
-	@RequestMapping(value = "/advertise", method = RequestMethod.POST)
+	@PostMapping(value = "/advertise", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE }, consumes =  MediaType.APPLICATION_XML_VALUE)
+	// @RequestMapping(value = "/advertise", method = RequestMethod.POST)
 
 	public ResponseEntity<OlxAdvertises> createNewAdvertise(@RequestBody OlxAdvertises advertiseData,
 			@RequestHeader("auth-token") String token) {
@@ -41,8 +44,8 @@ public class OlxAdvertiseController {
 		return new ResponseEntity<OlxAdvertises>(advertiseData, HttpStatus.CREATED);
 	}
 
-	// http:localhost:2040/advertise/{id}
-	@PutMapping("/advertise/{id}")
+	@PutMapping(value = "/advertise/{id}", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE }, consumes =  MediaType.APPLICATION_XML_VALUE)
 	public OlxAdvertises updateAdvertise(@PathVariable("id") int id, @RequestBody OlxAdvertises olxAd) {
 		OlxAdvertises availableAd = getSpecificAdvertise(id);
 		availableAd.setId(advertises.getId());
@@ -58,7 +61,8 @@ public class OlxAdvertiseController {
 
 	}
 
-	@GetMapping("/advertise/search/filtercriteria")
+	@GetMapping(value = "/advertise/search/filtercriteria", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public OlxAdvertises getSpecificAdvertise(@PathVariable("id") int id) {
 		if (advertises.getId() == id) {
 			return advertises;
@@ -67,7 +71,8 @@ public class OlxAdvertiseController {
 
 	}
 
-	@GetMapping("/user/advertise")
+	@GetMapping(value = "/user/advertise", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public List<OlxAdvertises> getAllAdvertises() {
 		return advertiseList;
 	}
@@ -82,5 +87,5 @@ public class OlxAdvertiseController {
 		}
 		return "Sorry Data is not available";
 	}
-	
+
 }

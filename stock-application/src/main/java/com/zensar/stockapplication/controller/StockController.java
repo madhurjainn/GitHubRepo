@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import org.apache.el.stream.Optional;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,7 +28,7 @@ import com.zensar.stockapplication.entity.Stock;
 @RestController
 @CrossOrigin("http:localhost:4200")//port number 4200 can access the application
 //by default url//http://localhost:2009/stocks
-@RequestMapping("/stocks")
+@RequestMapping(value="/stocks",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE}, consumes =MediaType.APPLICATION_XML_VALUE)
 public class StockController {
 	List<Stock> stocks = new ArrayList<Stock>();
 
@@ -41,7 +42,8 @@ public class StockController {
 public void test() {
 	System.out.println("Inside test method");
 }
-@RequestMapping(method= RequestMethod.POST)
+@GetMapping
+//@RequestMapping(method= RequestMethod.POST)
 public ResponseEntity<Stock> createStock1(@RequestBody Stock stock,@RequestHeader("auth-token")String token){
 	if(token.contentEquals("mj66453")) {
 		stocks.add(stock);
@@ -53,8 +55,8 @@ public ResponseEntity<Stock> createStock1(@RequestBody Stock stock,@RequestHeade
 }
 //Read all stocks
 	// http://localhost:2009/stocks
-	@GetMapping  //Handler Method
-	@RequestMapping(method = RequestMethod.GET)
+	@GetMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE})  //Handler Method
+	//@RequestMapping(method = RequestMethod.GET)
 	public List<Stock> getAllStocks() {
 		return stocks;
 	}
@@ -86,8 +88,8 @@ public ResponseEntity<Stock> createStock1(@RequestBody Stock stock,@RequestHeade
 	 * return stock; } } return null; }
 	 */
 	//Creating a stock
-	@PostMapping
-	@RequestMapping(value = "/stocks", method = RequestMethod.POST)
+	@PostMapping(produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE}, consumes =MediaType.APPLICATION_XML_VALUE)
+	//@RequestMapping(value = "/stocks", method = RequestMethod.POST)
 	public Stock createStock(@RequestBody Stock stock) {
 		stocks.add(stock);
 		return stock;
@@ -124,7 +126,7 @@ public ResponseEntity<Stock> createStock1(@RequestBody Stock stock,@RequestHeade
 	 * }
 	 */
 	//Updating a Stock
-	@PutMapping("/{stockId}")
+	@PutMapping(value="/{stockId}",produces = {MediaType.APPLICATION_JSON_VALUE,MediaType.APPLICATION_XML_VALUE}, consumes =MediaType.APPLICATION_XML_VALUE)
 	public Stock updateStock(@PathVariable("stockId") int stockId, @RequestBody Stock stock) {
 		Stock availableStock = getStock(stockId);
 		availableStock.setMarketName(stock.getMarketName());
