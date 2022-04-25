@@ -22,9 +22,9 @@ public class OlxAdvertiseServiceImpl implements OlxAdvertiseService {
 		if (token.equals("mj66453")) {
 			advertiseList.add(advertiseData);
 		} else {
-			return null;// new ResponseEntity<OlxAdvertises>(HttpStatus.CREATED);
+			return null;
 		}
-		return null;// new ResponseEntity<OlxAdvertises>(advertiseData, HttpStatus.CREATED);
+		return null;
 	}
 
 	@Override
