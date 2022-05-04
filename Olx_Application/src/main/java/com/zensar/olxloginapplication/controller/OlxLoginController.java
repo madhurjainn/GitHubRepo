@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.zensar.olxapplication.loginservice.LoginService;
 import com.zensar.olxloginapplication.entity.Olx;
+import com.zensar.olxloginapplication.entity.OlxResponse;
+import com.zensar.olxloginapplication.loginservice.LoginService;
 
 @RestController
 public class OlxLoginController {
@@ -23,8 +25,8 @@ public class OlxLoginController {
 	private LoginService loginService;
 	// http://localhost:2022/user
 	@GetMapping(value = "/user", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public List<Olx> getAllUsersInformation() {
-		return loginService.getAllUsersInformation();
+	public List<OlxResponse> getAllUsersInformation(@RequestParam(value="pageNumber",defaultValue = "0",required = false) int pageNumber,@RequestParam(value="pageSize",defaultValue = "5",required = false) int pageSize) {
+		return loginService.getAllUsersInformation(pageNumber, pageSize);
 		
 	}
 
@@ -44,13 +46,13 @@ public class OlxLoginController {
 			MediaType.APPLICATION_XML_VALUE }, consumes = MediaType.APPLICATION_XML_VALUE)
 	// RequestMapping(value = "/user", method = RequestMethod.POST)
 
-	public ResponseEntity<Olx> createUserData(@RequestBody Olx userData, @RequestHeader("auth-token") String token) {
+	public ResponseEntity<OlxResponse> createUserData(@RequestBody Olx userData, @RequestHeader("auth-token") String token) {
 		
-		Olx olx= loginService.createUserData(userData, token);
-		if(olx==null) {
-			return new ResponseEntity<Olx>(HttpStatus.BAD_REQUEST);
+		OlxResponse olxResponse= loginService.createUserData(userData, token);
+		if(olxResponse==null) {
+			return new ResponseEntity<OlxResponse>(HttpStatus.BAD_REQUEST);
 		}else {
-			return new ResponseEntity<Olx>(HttpStatus.CREATED);
+			return new ResponseEntity<OlxResponse>(HttpStatus.CREATED);
 		}
 		}
 		

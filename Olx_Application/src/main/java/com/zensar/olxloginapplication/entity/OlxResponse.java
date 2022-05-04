@@ -1,19 +1,13 @@
 package com.zensar.olxloginapplication.entity;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Olx {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+@AllArgsConstructor
+public class OlxResponse {
 	private int id;
 	private String firstName;
 	private String lastName;
@@ -21,4 +15,6 @@ public class Olx {
 	private String password;
 	private String email;
 	private long phone;
+
+
 }

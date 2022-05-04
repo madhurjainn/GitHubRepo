@@ -2,17 +2,16 @@ package com.zensar.stockapplication.service;
 
 import java.util.List;
 
-//import org.springframework.http.ResponseEntity;
-//import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.RequestBody;
-
-import com.zensar.stockapplication.entity.Stock;
+import com.zensar.stockapplication.dto.StockDto;
 
 public interface StockService {
-	List<Stock> getAllStocks();
-	Stock createStock(Stock stock,String token);
-	Stock getStock( int id);
+	List<StockDto> getAllStocks(int pageNumber,int pageSize);
+	StockDto createStock(StockDto stock,String token);
+	List<StockDto> getStockByItsName(String stockName);
+
+	StockDto getStock( int id);
     String deleteStock( int stockId);
-    Stock updateStock( int stockId, Stock stock);
+    StockDto updateStock( int stockId, StockDto stock);
+	List<StockDto> getStockByItsNameAndPrice(String stockName, double stockPrice);
 
 }

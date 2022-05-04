@@ -12,23 +12,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zensar.stockapplication.dto.StockDto;
 import com.zensar.stockapplication.entity.Stock;
 import com.zensar.stockapplication.service.StockService;
+
+/*import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import springfox.documentation.annotations.ApiIgnore;*/
 
 @RestController
 //@CrossOrigin("http:localhost:4200") // port number 4200 can access the application
 //by default url//http://localhost:2009/stocks
 @RequestMapping(value = "/stocks")
+//@Api(value="This is Stock Controller")
 public class StockController {
 	@Autowired
 	private StockService stockService;
-
+	//@ApiIgnore
 	// @GetMapping // Handler Method
 	@RequestMapping(method = RequestMethod.GET)
-	public List<Stock> getAllStocks() {
-		return stockService.getAllStocks();
+	//@ApiOperation(value = "Getting all stock info")
+	public List<StockDto> getAllStocks(@RequestParam(value="pageNumber",defaultValue = "0",required = false) int pageNumber,@RequestParam(value="pageSize",defaultValue = "5",required = false) int pageSize) {
+		System.out.println(pageNumber+" "+pageSize);
+		return stockService.getAllStocks(pageNumber,pageSize);
 	}
 
 //http://localhost:2009/stocks/test
@@ -36,15 +47,23 @@ public class StockController {
 	 * @RequestMapping(value="/test",method= {RequestMethod.GET,RequestMethod.POST})
 	 * public void test() { System.out.println("Inside test method"); }
 	 */
+	@RequestMapping(value="/name/{stockName}",method = RequestMethod.GET)
+	public List<StockDto> getStockByName(@PathVariable("stockName") String stockName){
+		return stockService.getStockByItsName(stockName);
+	}
+	@RequestMapping(value="/name/{stockName}/price/{stockPrice}",method = RequestMethod.GET)
+	public List<StockDto> getStockByItsNameAndPrice(@PathVariable("stockName") String stockName,@PathVariable("stockPrice") double stockPrice){
+		return stockService.getStockByItsNameAndPrice(stockName,stockPrice);
+	}
 @PostMapping
 	//@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Stock> createStock(@RequestBody Stock stock, @RequestHeader("auth-token") String token) {
-		Stock stockEntity = stockService.createStock(stock, token);
+	public ResponseEntity<StockDto> createStock(@RequestBody StockDto stock, @RequestHeader("auth-token") String token) {
+	StockDto stockEntity = stockService.createStock(stock, token);
 		if (stockEntity == null) {
-			return new ResponseEntity<Stock>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<StockDto>(HttpStatus.BAD_REQUEST);
 
 		} else {
-			return new ResponseEntity<Stock>(HttpStatus.CREATED);
+			return new ResponseEntity<StockDto>(HttpStatus.CREATED);
 		}
 	}
 
@@ -63,14 +82,17 @@ public class StockController {
 	 */
 //	@GetMapping(value = "/{stockId}")
 	@RequestMapping(value = "/{stockId}", method = RequestMethod.GET)
-	public Stock getStock(@PathVariable("stockId") int id) {
+	//@ApiOperation(value = "Getting stock based on stock Id")
+//	@ApiResponse(code = 200, message = "Got the stock of given stock Id")
+	//@ApiParam("stock id has to be greater than 1")
+	public StockDto getStock( @PathVariable int stockId) {
 		/*
 		 * java.util.Optional<Stock>
 		 * stock1=stocks.stream().filter(stock->stock.getStockId()==id).findAny();
 		 * if(stock1.isPresent()) { return stock1.get(); }else { return
 		 * stock1.orElseGet(()->{return new Stock();}); }
 		 */ // return stockService.getStock(id);
-		return stockService.getStock(id);
+		return stockService.getStock(stockId);
 	}
 
 	/*
@@ -91,6 +113,8 @@ public class StockController {
 //Deleting a stock
 
 	@DeleteMapping("/{stockId}")
+	//@ApiOperation(value = "Deleting stock with stock Id")
+	//@ApiParam("Enter valid Stock Id to delete stock") 
 	public String deleteStock(@PathVariable("stockId") int stockId) {
 		/*
 		 * for (Stock stock :stocks) { if (stock.getStockId() == stockId) {
@@ -121,7 +145,9 @@ public class StockController {
 	 */
 	// Updating a Stock
 	@PutMapping("/{stockId}")
-	public Stock updateStock(@PathVariable("stockId") int stockId, @RequestBody Stock stock) {
+	//@ApiOperation(value = "Updating stock with stock Id")
+	//@ApiParam("Enter valid Id to update stock")
+	public StockDto updateStock( @PathVariable("stockId") int stockId, @RequestBody StockDto stock) {
 		return stockService.updateStock(stockId, stock);
 	}
 	// Delete All stocks

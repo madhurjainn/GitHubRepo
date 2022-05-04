@@ -1,4 +1,4 @@
-package com.zensar.olxmasterapplication.entity;
+package com.zensar.stockapplication.dto;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,9 +11,12 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class OlxMasterCategory {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
-	private String category;
+public class StockDto {
+	//@Id
+	//@GeneratedValue(strategy = GenerationType.AUTO)
+	private int stockId;
+	private String name;
+	private String marketName;
+	private double price;
+
 }

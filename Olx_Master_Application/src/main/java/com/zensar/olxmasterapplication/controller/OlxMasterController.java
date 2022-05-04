@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.olxmasterapplication.entity.OlxMasterCategory;
+import com.zensar.olxmasterapplication.entity.OlxMasterResponse;
 import com.zensar.olxmasterapplication.entity.OlxMasterStatus;
-
-import olxmasterservice.OlxMasterService;
+import com.zensar.olxmasterapplication.masterservice.OlxMasterService;
 
 @RestController
 public class OlxMasterController {
@@ -19,18 +19,18 @@ public class OlxMasterController {
 	@Autowired
 	private OlxMasterService olxMasterService;
 
-	@GetMapping(value = "/advertize/category", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping("/advertise/category")//, produces = { MediaType.APPLICATION_JSON_VALUE,
+			//MediaType.APPLICATION_XML_VALUE })
 	// @RequestMapping(value="/advertise/category",method=RequestMethod.GET)
-	public List<OlxMasterCategory> getAllCategoriest() {
-		return olxMasterService.getAllCategoriest();
+	public List<OlxMasterResponse> getAllCategories(int pageNumber,int pageSize) {
+		return olxMasterService.getAllCategories(pageNumber,pageSize);
 	}
 
-	@GetMapping(value = "/advertise/status", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE })
+	@GetMapping(value = "/advertise/status")//, produces = { MediaType.APPLICATION_JSON_VALUE,
+			//MediaType.APPLICATION_XML_VALUE })
 	// @RequestMapping(value="/advertise/status",method=RequestMethod.GET)
-	public List<OlxMasterStatus> getAllStatus() {
-		return olxMasterService.getAllStatus();
+	public List<OlxMasterResponse> getAllStatus(int pageNumber,int pageSize) {
+		return olxMasterService.getAllStatus(pageNumber,pageSize);
 	}
 
 }

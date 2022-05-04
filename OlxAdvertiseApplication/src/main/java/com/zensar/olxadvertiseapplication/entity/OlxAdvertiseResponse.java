@@ -1,19 +1,13 @@
 package com.zensar.olxadvertiseapplication.entity;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class OlxAdvertises {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+@AllArgsConstructor
+public class OlxAdvertiseResponse {
+
 	private int id;
 	private String title;
 	private int price;
@@ -23,5 +17,4 @@ public class OlxAdvertises {
 	private int createdDate;
 	private int modifiedDate;
 	private String status;
-
 }
