@@ -151,6 +151,7 @@ public class StockServiceImpl implements StockService {
 	
 	public StockDto MapToDto(Stock stock) {
 		StockDto stockResponse=new StockDto();
+		stockResponse.setStockId(stock.getStockId());
 		stockResponse.setMarketName(stock.getMarketName());
 		stockResponse.setName(stock.getName());
 		stockResponse.setPrice(stock.getPrice());

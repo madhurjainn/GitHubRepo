@@ -1,18 +1,16 @@
 package com.zensar.olxloginapplication.loginservice;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
+import com.zensar.olxloginapplication.dto.LoginDto;
 import com.zensar.olxloginapplication.entity.Olx;
-import com.zensar.olxloginapplication.entity.OlxRequest;
-import com.zensar.olxloginapplication.entity.OlxResponse;
 import com.zensar.olxloginapplication.repository.LoginRepository;
 
 @Service
@@ -30,12 +28,12 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public List<OlxResponse> getAllUsersInformation(int pageNumber, int pageSize) {
+	public List<LoginDto> getAllUsersInformation(int pageNumber, int pageSize) {
 		Page<Olx> pageStocks= loginRepository.findAll(PageRequest.of(pageNumber, pageSize));
 		List<Olx> content=pageStocks.getContent();
-		List<OlxResponse> olxResponses=new ArrayList<>();
+		List<LoginDto> olxResponses=new ArrayList<>();
 		for(Olx stock:content) {
-			OlxResponse olxResponse=modelMapper.map(olx,OlxResponse.class);
+			LoginDto olxResponse=modelMapper.map(olx,LoginDto.class);
 			olxResponses.add(olxResponse);
 			/*
 			 * OlxResponse MapToResponse=MapToResponse(olx);
@@ -60,11 +58,11 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public OlxResponse createUserData(Olx userData, String token) {
+	public LoginDto createUserData(Olx userData, String token) {
 		Olx newOlx=modelMapper.map(olx,Olx.class);
 		 if (token.equals("mj66453")) {
 			 Olx olx1 = loginRepository.save(newOlx);
-			 return modelMapper.map(olx1,OlxResponse.class);
+			 return modelMapper.map(olx1,LoginDto.class);
 			 } else {
 		  return null;
 		  }
@@ -82,33 +80,31 @@ public class LoginServiceImpl implements LoginService {
 		}
 		return "Sorry Data is not available";
 	}
-	public Olx MapToOlx(OlxRequest olxRequest) {
-		Olx newOlx=new Olx();
-		newOlx.setId(olxRequest.getId());
-		newOlx.setFirstName(olxRequest.getFirstName());
-		newOlx.setLastName(olxRequest.getLastName());
-		newOlx.setUserName(olxRequest.getUserName());
-		newOlx.setPassword(olxRequest.getPassword());
-		newOlx.setEmail(olxRequest.getEmail());
-		newOlx.setPhone(olxRequest.getPhone());
-		return newOlx;
-		
 
-	}
-	public Olx MapToOlx(OlxResponse olxResponse) {
-		Olx newOlx=new Olx();
-		newOlx.setId(olxResponse.getId());
-		newOlx.setFirstName(olxResponse.getFirstName());
-		newOlx.setLastName(olxResponse.getLastName());
-		newOlx.setUserName(olxResponse.getUserName());
-		newOlx.setPassword(olxResponse.getPassword());
-		newOlx.setEmail(olxResponse.getEmail());
-		newOlx.setPhone(olxResponse.getPhone());
-		return newOlx;
-		
-	}
-	public OlxResponse MapToResponse(Olx olx) {
-		OlxResponse olxResponse=new OlxResponse();
+	/*
+	 * public Olx MapToOlx(OlxRequest olxRequest) { Olx newOlx=new Olx();
+	 * newOlx.setId(olxRequest.getId());
+	 * newOlx.setFirstName(olxRequest.getFirstName());
+	 * newOlx.setLastName(olxRequest.getLastName());
+	 * newOlx.setUserName(olxRequest.getUserName());
+	 * newOlx.setPassword(olxRequest.getPassword());
+	 * newOlx.setEmail(olxRequest.getEmail());
+	 * newOlx.setPhone(olxRequest.getPhone()); return newOlx;
+	 * 
+	 * 
+	 * } public Olx MapToOlx(OlxResponse olxResponse) { Olx newOlx=new Olx();
+	 * newOlx.setId(olxResponse.getId());
+	 * newOlx.setFirstName(olxResponse.getFirstName());
+	 * newOlx.setLastName(olxResponse.getLastName());
+	 * newOlx.setUserName(olxResponse.getUserName());
+	 * newOlx.setPassword(olxResponse.getPassword());
+	 * newOlx.setEmail(olxResponse.getEmail());
+	 * newOlx.setPhone(olxResponse.getPhone()); return newOlx;
+	 * 
+	 * }
+	 */
+	public LoginDto MapToResponse(Olx olx) {
+		LoginDto olxResponse=new LoginDto();
 		olx.setId(olx.getId());
 		olx.setFirstName(olx.getFirstName());
 		olx.setLastName(olx.getLastName());

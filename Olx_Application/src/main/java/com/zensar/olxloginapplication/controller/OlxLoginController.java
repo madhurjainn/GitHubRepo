@@ -1,9 +1,9 @@
 package com.zensar.olxloginapplication.controller;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zensar.olxloginapplication.dto.LoginDto;
 import com.zensar.olxloginapplication.entity.Olx;
-import com.zensar.olxloginapplication.entity.OlxResponse;
 import com.zensar.olxloginapplication.loginservice.LoginService;
 
 @RestController
@@ -24,16 +24,15 @@ public class OlxLoginController {
 	@Autowired
 	private LoginService loginService;
 	// http://localhost:2022/user
-	@GetMapping(value = "/user", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
-	public List<OlxResponse> getAllUsersInformation(@RequestParam(value="pageNumber",defaultValue = "0",required = false) int pageNumber,@RequestParam(value="pageSize",defaultValue = "5",required = false) int pageSize) {
+	@GetMapping(value = "/user")
+	public List<LoginDto> getAllUsersInformation(@RequestParam(value="pageNumber",defaultValue = "0",required = false) int pageNumber,@RequestParam(value="pageSize",defaultValue = "5",required = false) int pageSize) {
 		return loginService.getAllUsersInformation(pageNumber, pageSize);
 		
 	}
 
 //http:localhost//
 
-	@PostMapping(value = "/users/authenticate", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE }, consumes = MediaType.APPLICATION_XML_VALUE)
+	@PostMapping(value = "/users/authenticate")
 	// @RequestMapping(value = "/users/authenticate", method = RequestMethod.POST)
 
 	public String getLoginData(@RequestBody(required = false) String userName,
@@ -42,17 +41,16 @@ public class OlxLoginController {
 		
 	}
 
-	@PostMapping(value = "/user", produces = { MediaType.APPLICATION_JSON_VALUE,
-			MediaType.APPLICATION_XML_VALUE }, consumes = MediaType.APPLICATION_XML_VALUE)
+	@PostMapping(value = "/user")
 	// RequestMapping(value = "/user", method = RequestMethod.POST)
 
-	public ResponseEntity<OlxResponse> createUserData(@RequestBody Olx userData, @RequestHeader("auth-token") String token) {
+	public ResponseEntity<LoginDto> createUserData(@RequestBody Olx userData, @RequestHeader("auth-token") String token) {
 		
-		OlxResponse olxResponse= loginService.createUserData(userData, token);
+		LoginDto olxResponse= loginService.createUserData(userData, token);
 		if(olxResponse==null) {
-			return new ResponseEntity<OlxResponse>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<LoginDto>(HttpStatus.BAD_REQUEST);
 		}else {
-			return new ResponseEntity<OlxResponse>(HttpStatus.CREATED);
+			return new ResponseEntity<LoginDto>(HttpStatus.CREATED);
 		}
 		}
 		

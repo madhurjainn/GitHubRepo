@@ -4,20 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.zensar.olxadvertiseapplication.entity.OlxAdvertiseRequest;
-import com.zensar.olxadvertiseapplication.entity.OlxAdvertiseResponse;
+import com.zensar.olxadvertiseapplication.dto.AdvertiseDto;
 import com.zensar.olxadvertiseapplication.entity.OlxAdvertises;
 import com.zensar.olxadvertiseappliction.repository.AdvertiseRepository;
-
 @Service
 public class OlxAdvertiseServiceImpl implements OlxAdvertiseService {
-	OlxAdvertises advertises = new OlxAdvertises();
+	@Autowired
 	private AdvertiseRepository advertiseRepository;
+	
 	private ModelMapper modelMapper = new ModelMapper();
+	OlxAdvertises advertises = new OlxAdvertises();
 
 	static List<OlxAdvertises> advertiseList = new ArrayList<OlxAdvertises>();
 
@@ -27,20 +26,20 @@ public class OlxAdvertiseServiceImpl implements OlxAdvertiseService {
 	}
 
 	@Override
-	public OlxAdvertiseResponse createNewAdvertise(OlxAdvertiseRequest olxRequest, String token) {
+	public AdvertiseDto createNewAdvertise(AdvertiseDto olxRequest, String token) {
 		OlxAdvertises newOlx = modelMapper.map(olxRequest, OlxAdvertises.class);
 
 		if (token.equals("ag66543")) {
 			OlxAdvertises olx1 = advertiseRepository.save(newOlx);
-			return modelMapper.map(olx1, OlxAdvertiseResponse.class);
+			return modelMapper.map(olx1, AdvertiseDto.class);
 
 		} else {
 			return null;
 		}
 	}
-	 public OlxAdvertiseResponse updateAdvertise(int id, OlxAdvertiseRequest olxAdvertiseRequest) {
+	 public AdvertiseDto updateAdvertise(int id, AdvertiseDto olxAdvertiseRequest) {
 
-		 OlxAdvertiseResponse olxResponse = getSpecificAdvertise(id);
+		 AdvertiseDto olxResponse = getSpecificAdvertise(id);
 
 
 
@@ -49,16 +48,16 @@ public class OlxAdvertiseServiceImpl implements OlxAdvertiseService {
 
 
 		 OlxAdvertises olx2 = advertiseRepository.save(olx1);
-		 return modelMapper.map(olx2, OlxAdvertiseResponse.class);
+		 return modelMapper.map(olx2, AdvertiseDto.class);
 		 }
 	@Override
 	/*
 	 * public OlxAdvertises getSpecificAdvertise(int id) { if (advertises.getId() ==
 	 * id) { return advertises; } return null; }
 	 */
-	public OlxAdvertiseResponse getSpecificAdvertise(int id) {
+	public AdvertiseDto getSpecificAdvertise(int id) {
 	OlxAdvertises olxResponse = advertiseRepository.findById(id).get();
-	return modelMapper.map(olxResponse, OlxAdvertiseResponse.class);
+	return modelMapper.map(olxResponse, AdvertiseDto.class);
 	}
 
 
@@ -74,16 +73,15 @@ public class OlxAdvertiseServiceImpl implements OlxAdvertiseService {
 	}
 
 	@Override
-	public List<OlxAdvertiseResponse> getAllAdvertises(int pageNumber, int pageSize) {
-		Page<OlxAdvertises> pageOlx = advertiseRepository.findAll(PageRequest.of(pageNumber, pageSize));
-		List<OlxAdvertises> content = pageOlx.getContent();
-		List<OlxAdvertiseResponse> olxAdvertiseResponses = new ArrayList<>();
-		for (OlxAdvertises stock : content) {
-			OlxAdvertiseResponse olxResponse = modelMapper.map(pageOlx, OlxAdvertiseResponse.class);
+	public List<AdvertiseDto> getAllAdvertises() {
+		List<OlxAdvertises> listOlx = advertiseRepository.findAll();
+		List<AdvertiseDto> olxAdvertiseResponses = new ArrayList<>();
+		for (OlxAdvertises stock : advertiseList) {
+			AdvertiseDto olxResponse = modelMapper.map(stock, AdvertiseDto.class);
 			olxAdvertiseResponses.add(olxResponse);
 		}
 		return olxAdvertiseResponses;
 
 	}
-
+	
 }

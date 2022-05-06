@@ -1,5 +1,6 @@
 package com.zensar.olxadvertiseapplication.entity;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +12,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
 public class OlxAdvertises {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
