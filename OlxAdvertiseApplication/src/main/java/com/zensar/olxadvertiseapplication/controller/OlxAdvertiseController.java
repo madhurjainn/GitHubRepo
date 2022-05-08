@@ -29,13 +29,13 @@ public class OlxAdvertiseController {
 		//	MediaType.APPLICATION_XML_VALUE }, consumes =  MediaType.APPLICATION_XML_VALUE)
 	 @RequestMapping(value = "/advertise", method = RequestMethod.POST)
 
-	public ResponseEntity<OlxAdvertises> createNewAdvertise(@RequestBody AdvertiseDto advertiseData,
+	public ResponseEntity<AdvertiseDto> createNewAdvertise(@RequestBody AdvertiseDto advertiseData,
 			@RequestHeader("auth-token") String token) {
 		 AdvertiseDto Advertise=olxAdvertiseService.createNewAdvertise(advertiseData, token);
 		if(Advertise==null) {
-			return new ResponseEntity<OlxAdvertises>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<AdvertiseDto>(HttpStatus.BAD_REQUEST);
 		}else {
-			return new ResponseEntity<OlxAdvertises>(HttpStatus.CREATED);
+			return new ResponseEntity<AdvertiseDto>(Advertise, HttpStatus.CREATED);
 		}
 	}
 

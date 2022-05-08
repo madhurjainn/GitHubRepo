@@ -11,8 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class LoginDto {
 	@Id
-	private int stockId;
-	private String name;
-	private String marketName;
-	private double price;
+	private int id;
+	private String firstName;
+	private String lastName;
+	private String userName;
+	private String password;
+	private String email;
+	private long phone;
 }

@@ -7,9 +7,9 @@ import com.zensar.olxloginapplication.entity.Olx;
 
 public interface LoginService {
 	//List<Olx> getAllUsersInformation();
-	List<LoginDto> getAllUsersInformation(int pageNumber, int pageSize);
+	List<LoginDto> getAllUsersInformation();
 	String getLoginData( String userName, String password,String token);
-	LoginDto createUserData( Olx userData, String token);
+	LoginDto createUserData(LoginDto userData, String token);
 	String DeleteUserData( int id);
 
 }

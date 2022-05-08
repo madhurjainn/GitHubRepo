@@ -18,12 +18,13 @@ public class OlxAdvertiseServiceImpl implements OlxAdvertiseService {
 	private ModelMapper modelMapper = new ModelMapper();
 	OlxAdvertises advertises = new OlxAdvertises();
 
-	static List<OlxAdvertises> advertiseList = new ArrayList<OlxAdvertises>();
-
-	static {
-		advertiseList.add(new OlxAdvertises(1, "laptop sale", 54000, "Electronic goods", "intel core 3 Sony Vaio",
-				"anand", 2104, 2104, "Open"));
-	}
+	/*
+	 * static List<OlxAdvertises> advertiseList = new ArrayList<OlxAdvertises>();
+	 * 
+	 * static { advertiseList.add(new OlxAdvertises(1, "laptop sale", 54000,
+	 * "Electronic goods", "intel core 3 Sony Vaio", "anand", 2104, 2104, "Open"));
+	 * }
+	 */
 
 	@Override
 	public AdvertiseDto createNewAdvertise(AdvertiseDto olxRequest, String token) {
@@ -63,20 +64,20 @@ public class OlxAdvertiseServiceImpl implements OlxAdvertiseService {
 
 	@Override
 	public String DeleteAdvertise(int id) {
-		for (OlxAdvertises olxAd : advertiseList) {
-			if (olxAd.getId() == id) {
-				advertiseList.remove(olxAd);
-				return "Data deletion Successfull";
-			}
-		}
-		return "Sorry Data is not available";
+		/*
+		 * for (OlxAdvertises olxAd : ) { if (olxAd.getId() == id) {
+		 * advertiseList.remove(olxAd); return "Data deletion Successfull"; } } return
+		 * "Sorry Data is not available";
+		 */
+		advertiseRepository.deleteById(id);
+		return "Deleted Successfully";
 	}
 
 	@Override
 	public List<AdvertiseDto> getAllAdvertises() {
 		List<OlxAdvertises> listOlx = advertiseRepository.findAll();
 		List<AdvertiseDto> olxAdvertiseResponses = new ArrayList<>();
-		for (OlxAdvertises stock : advertiseList) {
+		for (OlxAdvertises stock : listOlx) {
 			AdvertiseDto olxResponse = modelMapper.map(stock, AdvertiseDto.class);
 			olxAdvertiseResponses.add(olxResponse);
 		}

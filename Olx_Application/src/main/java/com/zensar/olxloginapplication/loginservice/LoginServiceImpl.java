@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.zensar.olxloginapplication.dto.LoginDto;
@@ -19,20 +17,22 @@ public class LoginServiceImpl implements LoginService {
 	private ModelMapper modelMapper = new ModelMapper();
 	@Autowired
 	private LoginRepository loginRepository;
-	static List<Olx> userDataList = new ArrayList<Olx>();
 
-	static {
-		userDataList.add(new Olx(1, "Madhur", "Jain", "madhur.jain44", "madhur@123", "madhur@gmail.com", 1000));
-		userDataList.add(new Olx(2, "MadhurJ", "Jainn", "madhur.jain444", "madhur@1234", "madhur@gmail.comm", 1001));
-
-	}
-
+	/*
+	 * static List<Olx> userDataList = new ArrayList<Olx>();
+	 * 
+	 * static { userDataList.add(new Olx(1, "Madhur", "Jain", "madhur.jain44",
+	 * "madhur@123", "madhur@gmail.com", 1000)); userDataList.add(new Olx(2,
+	 * "MadhurJ", "Jainn", "madhur.jain444", "madhur@1234", "madhur@gmail.comm",
+	 * 1001));
+	 * 
+	 * }
+	 */
 	@Override
-	public List<LoginDto> getAllUsersInformation(int pageNumber, int pageSize) {
-		Page<Olx> pageStocks= loginRepository.findAll(PageRequest.of(pageNumber, pageSize));
-		List<Olx> content=pageStocks.getContent();
+	public List<LoginDto> getAllUsersInformation() {
+		List<Olx> pageOlx= loginRepository.findAll();
 		List<LoginDto> olxResponses=new ArrayList<>();
-		for(Olx stock:content) {
+		for(Olx olx:pageOlx) {
 			LoginDto olxResponse=modelMapper.map(olx,LoginDto.class);
 			olxResponses.add(olxResponse);
 			/*
@@ -58,8 +58,8 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public LoginDto createUserData(Olx userData, String token) {
-		Olx newOlx=modelMapper.map(olx,Olx.class);
+	public LoginDto createUserData(LoginDto userData, String token) {
+		Olx newOlx=modelMapper.map(userData,Olx.class);
 		 if (token.equals("mj66453")) {
 			 Olx olx1 = loginRepository.save(newOlx);
 			 return modelMapper.map(olx1,LoginDto.class);
@@ -72,13 +72,13 @@ public class LoginServiceImpl implements LoginService {
 
 	@Override
 	public String DeleteUserData(int id) {
-		for (Olx olx : userDataList) {
-			if (olx.getId() == id) {
-				userDataList.remove(olx);
-				return "Data deletion Successfull";
-			}
-		}
-		return "Sorry Data is not available";
+		/*
+		 * for (Olx olx : userDataList) { if (olx.getId() == id) {
+		 * userDataList.remove(olx); return "Data deletion Successfull"; } } return
+		 * "Sorry Data is not available";
+		 */
+		loginRepository.deleteById(id);
+		return "Deleted Successfully";
 	}
 
 	/*
