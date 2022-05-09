@@ -29,6 +29,20 @@ public class LoginServiceImpl implements LoginService {
 	 * }
 	 */
 	@Override
+	public
+	List<LoginDto> findOlxByFirstName(String firstName){
+	List<Olx> findName=loginRepository.findOlxByFirstName(firstName);
+	List<LoginDto> olxResponses = new ArrayList<>();
+	for(Olx st:findName) {
+		//LoginDto mapToResponse = MapToResponse(st);
+		LoginDto response=modelMapper.map(st, LoginDto.class);
+	olxResponses.add(response);
+	}
+
+	return olxResponses;
+	}
+
+	@Override
 	public List<LoginDto> getAllUsersInformation() {
 		List<Olx> pageOlx= loginRepository.findAll();
 		List<LoginDto> olxResponses=new ArrayList<>();
@@ -121,3 +135,5 @@ public class LoginServiceImpl implements LoginService {
 		
 	}
 }
+
+	

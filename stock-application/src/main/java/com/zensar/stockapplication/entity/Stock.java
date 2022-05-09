@@ -21,8 +21,8 @@ import lombok.NoArgsConstructor;
 @Entity(name = "MyStock")
 @Table(name = "Stock")
 
-@NamedQueries(value = {@NamedQuery(name = "Stock.findStockByItsName",query = "FROM MyStock s where s.name=?1"),
-@NamedQuery(name="Stock.findStockByItsNameAndPrice",query="FROM MyStock s where s.name=?1 and s.price=?2")})
+//@NamedQueries(value = {@NamedQuery(name = "Stock.findStockByItsName",query = "FROM MyStock s where s.name=?1"),
+//@NamedQuery(name="Stock.findStockByItsNameAndPrice",query="FROM MyStock s where s.name=?1 and s.price=?2")})
 
 //@NamedQuery(name = "Stock.findStockByItsName",query = "FROM Stock s where s.name=?1")
 //@NamedQuery(name="Stock.findStockByItsNameAndPrice",query="FROM Stock s where s.name=?1 and s.price=?2")

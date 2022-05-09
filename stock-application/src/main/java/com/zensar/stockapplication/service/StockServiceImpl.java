@@ -1,7 +1,6 @@
 package com.zensar.stockapplication.service;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -10,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import com.zensar.stockapplication.dto.StockDto;
 import com.zensar.stockapplication.entity.Stock;
 import com.zensar.stockapplication.repository.StockRepository;

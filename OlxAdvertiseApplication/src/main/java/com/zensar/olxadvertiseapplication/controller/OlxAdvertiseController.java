@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.olxadvertiseapplication.advertiseservice.OlxAdvertiseService;
 import com.zensar.olxadvertiseapplication.dto.AdvertiseDto;
-import com.zensar.olxadvertiseapplication.entity.OlxAdvertises;
 
 @RestController
 public class OlxAdvertiseController {

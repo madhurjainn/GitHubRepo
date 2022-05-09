@@ -2,7 +2,6 @@ package com.zensar.olxadvertiseapplication.advertiseservice;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +13,9 @@ import com.zensar.olxadvertiseappliction.repository.AdvertiseRepository;
 public class OlxAdvertiseServiceImpl implements OlxAdvertiseService {
 	@Autowired
 	private AdvertiseRepository advertiseRepository;
-	
-	private ModelMapper modelMapper = new ModelMapper();
-	OlxAdvertises advertises = new OlxAdvertises();
+	@Autowired
+	private ModelMapper modelMapper;
+	//OlxAdvertises advertises = new OlxAdvertises();
 
 	/*
 	 * static List<OlxAdvertises> advertiseList = new ArrayList<OlxAdvertises>();
@@ -84,5 +83,18 @@ public class OlxAdvertiseServiceImpl implements OlxAdvertiseService {
 		return olxAdvertiseResponses;
 
 	}
+	@Override
+	public List<AdvertiseDto> findOlxMasterByCategory(String category1) {
+		List<OlxAdvertises> findName= advertiseRepository.findOlxMasterByCategory(category1);
+		List<AdvertiseDto> olxResponses = new ArrayList<>();
+		for(OlxAdvertises st:findName) {
+		//MasterDto mapToResponse = mapToResponse(st);
+			AdvertiseDto response=modelMapper.map(st, AdvertiseDto.class);
+		olxResponses.add(response);
+		}
+
+		return olxResponses;
+		}
+	}
 	
-}
+

@@ -95,6 +95,35 @@ public class OlxMasterServiceImpl implements OlxMasterService {
 
 	}
 
+	@Override
+	public List<MasterDto> findOlxMasterByCategory(String category1) {
+		List<OlxMasterCategory> findName=masterCategoryRepository.findOlxMasterByCategory(category1);
+		List<MasterDto> olxResponses = new ArrayList<>();
+		for(OlxMasterCategory st:findName) {
+		//MasterDto mapToResponse = mapToResponse(st);
+		MasterDto response=modelMapper.map(st, MasterDto.class);
+		olxResponses.add(response);
+		}
+
+		return olxResponses;
+		}
+
+
+	@Override
+	public List<MasterDto> findOlxMasterByStatus(String status1) {
+		List<OlxMasterStatus> findName=masterStatusRepository.findOlxMasterByStatus(status1);
+		List<MasterDto> olxResponses = new ArrayList<>();
+		for(OlxMasterStatus st:findName) {
+		//MasterDto mapToResponse = mapToResponse(st);
+			MasterDto response=modelMapper.map(st, MasterDto.class);
+			olxResponses.add(response);
+			}
+
+			return olxResponses;
+			}
+}
+	
+
 	/*
 	 * public OlxMasterStatus MapToOlxStatus(OlxMasterRequest olxMasterRequest) {
 	 * OlxMasterStatus newOlx=new OlxMasterStatus();
@@ -124,4 +153,3 @@ public class OlxMasterServiceImpl implements OlxMasterService {
 	 * 
 	 * }
 	 */
-}
