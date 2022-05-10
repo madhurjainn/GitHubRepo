@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.zensar.olxadvertiseapplication.dto.AdvertiseDto;
 import com.zensar.olxadvertiseapplication.entity.OlxAdvertises;
-import com.zensar.olxadvertiseappliction.repository.AdvertiseRepository;
+import com.zensar.olxadvertiseapplication.repository.AdvertiseRepository;
 @Service
 public class OlxAdvertiseServiceImpl implements OlxAdvertiseService {
 	@Autowired

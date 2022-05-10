@@ -1,4 +1,4 @@
-package com.zensar.olxadvertiseappliction.repository;
+package com.zensar.olxadvertiseapplication.repository;
 
 import java.util.List;
 
